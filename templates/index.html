@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block body %}
+<div style="border: none;" class='page-header'>
+    <div style="padding-right: 10px;" class='float-sm-right'>
+        <div class="btn-group-vertical">
+            <a href="https://automatedinsights.com/wordsmith" target="_blank"><img class="logo" src={{ url_for('static',
+                filename='img/ai_logo.png') }} /></a>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 10px; overflow: hidden;" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="row" id="contentContainer">
+                <div class="col-sm-12 narrative" id="content"></div>
+            </div>
+            <div class="row loadingContainer" id="content">
+                <div class="col-sm-12" align="center">Wordsmithing...</div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-12" id="tableauViz"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
