@@ -1,21 +1,21 @@
 {
   "name": "js",
   "version": "1.0.0",
-  "description": "js files for tableau narratives",
+  "description": "WS + Tableau Integration SDK for Python",
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ai-invent/tableau-slalom-healthcare.git"
+    "url": "git+https://github.com/ai-wordsmith/tableau-wordsmith-python-sdk.git"
   },
   "author": "JH, DS",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ai-invent/tableau-slalom-healthcare/issues"
+    "url": "https://github.com/ai-wordsmith/tableau-wordsmith-python-sdk/issues"
   },
-  "homepage": "https://github.com/ai-invent/tableau-slalom-healthcare#readme",
+  "homepage": "https://github.com/ai-wordsmith/tableau-wordsmith-python-sdk#readme",
   "devDependencies": {
     "eslint": "^4.6.1",
     "eslint-config-airbnb-base": "^12.0.0",
@@ -25,7 +25,6 @@
     "webpack": "^3.6.0"
   },
   "dependencies": {
-    "automated-template-generator": "github:ai-invent/automated-template-generator",
     "bluebird": "^3.5.0",
     "eslint-config-airbnb": "^15.1.0",
     "json-loader": "^0.5.7",

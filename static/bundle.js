@@ -126,7 +126,7 @@ $(() => {
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = {"tableau":{"server":"https://public.tableau.com/","project":"Superstore_1057","view":"Overview","changes":{"filters":false,"marks":false,"parameters":false}},"wordsmith":{"api_key":"c530d364e5044a2161531cb494394e93364593f094bdcd94b82fdb95a2a2f6a0","project_name":"nbapg","template_name":"primary"},"html":{"title":"SuperStore Sample","file":"table.html"},"dev":false}
+module.exports = {"tableau":{"server":"https://public.tableau.com/","project":"Superstore_1057","view":"Overview","changes":{"filters":false,"marks":false,"parameters":false}},"wordsmith":{"api_key":"*","project_slug":"project","template_slug":"template"},"html":{"title":"SuperStore Sample","file":"table.html"},"dev":false}
 
 /***/ }),
 /* 2 */
