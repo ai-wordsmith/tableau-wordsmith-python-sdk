@@ -1,0 +1,6 @@
+# Excel Files
+*.csv
+*.xlsx
+
+# IDE Files
+*.idea/
