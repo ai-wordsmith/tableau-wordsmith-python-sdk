@@ -9,21 +9,32 @@ tableauHelper.getAllSettings = (viz) => {
   ]);
 };
 
+const parseFilter = (filter) => {
+  const type = filter.getFilterType();
+  let values;
+  switch (type) {
+    case 'quantitative':
+      values = [filter.getMin(), filter.getMax()];
+      break;
+    case 'relative_date':
+      values = [filter.getPeriod(), filter.getRange()];
+      break;
+    case 'hierarchical':
+    case 'categorical':
+    default:
+      values = filter.getAppliedValues();
+  }
+  return values;
+};
+
 tableauHelper.getFilters = (viz, sheets) => Promise.all(sheets
   .map(sheet => sheet.getFiltersAsync()))
-  .then(filterSheets => filterSheets.reduce((output, filterClasses, indx) => {
-    const sheetName = sheets[indx].getName();
+  .then(filterSheets => filterSheets.reduce((output, filterClasses) => {
     const newOutput = output;
-    newOutput[sheetName] = {};
-    filterClasses.forEach((klass) => {
-      const key = klass.getFieldName();
-      if (!Object.keys(newOutput[sheetName]).includes(key)) {
-        newOutput[sheetName][key] = klass.getAppliedValues().reduce((values, val) => {
-          if (!values.includes(val.formattedValue)) {
-            values.push(val.formattedValue);
-          }
-          return values;
-        }, []);
+    filterClasses.forEach((filter) => {
+      const key = filter.getFieldName();
+      if (!Object.keys(newOutput).includes(key)) {
+        newOutput[key] = parseFilter(filter);
       }
     });
     return newOutput;
