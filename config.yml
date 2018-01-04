@@ -2,18 +2,15 @@ tableau:
   server: "https://tableau-server.automatedinsights.com/"
   project: "ServiceNow_Incidents_Manager_RC"
   view: "IncidentMonthlyReport"
-  htmlElement: "tableauViz"
   changes:
     filters: False
     marks: False
     parameters: True
-html:
-  title: "ServiceNow Incidents Manager"
-  file: "index.html"
 wordsmith:
   api_key: 'c530d364e5044a2161531cb494394e93364593f094bdcd94b82fdb95a2a2f6a0'
   project_name: 'nbapg'
   template_name: 'primary'
-dev:
-  flag: False
-  settings: 'settings_test'
+html:
+  title: "ServiceNow Incidents Manager"
+  file: "index.html"
+dev: False
