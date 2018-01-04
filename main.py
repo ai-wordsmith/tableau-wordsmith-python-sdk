@@ -5,7 +5,8 @@ from easydict import EasyDict as edict
 from flask import Flask, render_template, request, url_for, jsonify
 
 from app.model import build_ws_data
-from app.wordsmith import Wordsmith, NarrativeGenerateError
+from app.wordsmith import Wordsmith,\
+    NarrativeGenerateError, ProjectSlugError, TemplateSlugError
 
 with open('config.yml') as f:
     cfg = edict(yaml.safe_load(f))
@@ -32,16 +33,20 @@ def generate(ws_data):
     :return: Json blob with content
     """
     ws = Wordsmith(cfg.wordsmith.api_key)
+    msg = 'There was an error generating your content. ' \
+          'Please enter your Wordsmith API Key and Project and Template in config.yml. ' \
+          'Please also check that the data generated in model.py matches the data schema' \
+          'of the designated Wordsmith Project.'
     try:
         return jsonify(
-            ws.project(cfg.wordsmith.project_name, name=True)
-            .template(cfg.wordsmith.template_name, name=True)
+            ws.project(cfg.wordsmith.project_slug, name=True)
+            .template(cfg.wordsmith.template_slug, name=True)
             .generate_narrative(ws_data).text)
     except NarrativeGenerateError:
-        msg =  'There was an error generating your content. ' \
-               'Please enter your Wordsmith API Key and Project and Template in config.yml. ' \
-               'Please also check that the data generated in model.py matches the data schema' \
-               'of the designated Wordsmith Project.'
+        return jsonify(msg)
+    except ProjectSlugError:
+        return jsonify(msg)
+    except TemplateSlugError:
         return jsonify(msg)
 
 
