@@ -16,6 +16,12 @@ def build_ws_data(settings, cfg):
     # Initialize the empty output dictionary
     output = dict()
 
+    ####################################
+    # Write calculations here.
+    # Store each calc as a value in output dictionary.
+    # The key will become the column name in Wordsmith.
+    ####################################
+
     if cfg.dev:
         pd.DataFrame([output]).to_csv('ws_data.csv', index=False)
 
