@@ -4,3 +4,6 @@
 
 # IDE Files
 *.idea/
+
+# Node Files
+node_modules/
