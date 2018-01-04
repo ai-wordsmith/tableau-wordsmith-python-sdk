@@ -1,11 +1,11 @@
 import os
-import importlib
 import yaml
 
 from easydict import EasyDict as edict
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, jsonify
 
-import app.model as model
+from app.model import build_ws_data
+from app.wordsmith import Wordsmith, NarrativeGenerateError
 
 with open('config.yml') as f:
     cfg = edict(yaml.safe_load(f))
@@ -20,9 +20,9 @@ def store_settings(settings):
     :param settings: Python dictionary with WS data
     """
     print('Storing settings..')
-    with open('{}.p'.format(cfg.dev.settings), 'wb') as f:
+    with open('settings.p', 'wb') as s:
         import pickle
-        pickle.dump(settings, f)
+        pickle.dump(settings, s)
 
 
 def generate(ws_data):
@@ -32,10 +32,17 @@ def generate(ws_data):
     :return: Json blob with content
     """
     ws = Wordsmith(cfg.wordsmith.api_key)
-    return jsonify(
-        ws.project(cfg.wordsmith.project_name, name=True)
-        .template(cfg.wordsmith.template_name, name=True)
-        .generate_narrative(ws_data).text)
+    try:
+        return jsonify(
+            ws.project(cfg.wordsmith.project_name, name=True)
+            .template(cfg.wordsmith.template_name, name=True)
+            .generate_narrative(ws_data).text)
+    except NarrativeGenerateError:
+        msg =  'There was an error generating your content. ' \
+               'Please enter your Wordsmith API Key and Project and Template in config.yml. ' \
+               'Please also check that the data generated in model.py matches the data schema' \
+               'of the designated Wordsmith Project.'
+        return jsonify(msg)
 
 
 @app.route('/')
@@ -62,14 +69,14 @@ def content():
     settings = request.get_json()
 
     # If in development, save the returned settings locally
-    if cfg.dev.flag:
-        model.store_settings(settings, cfg)
+    if cfg.dev:
+        store_settings(settings)
 
     # Build the wordsmith-ready data structure from applied filters.
-    ws_data = model.build_ws_data(settings, cfg)
+    ws_data = build_ws_data(settings, cfg)
 
     # Generate narrative with the wordsmith-ready data
-    return model.generate(ws_data, cfg)
+    return generate(ws_data)
 
 
 if __name__ == "__main__":
