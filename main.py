@@ -14,6 +14,30 @@ with open('config.yml') as f:
 app = Flask(__name__)
 
 
+def store_settings(settings):
+    """
+    Store the settings scraped from the dasboard.
+    :param settings: Python dictionary with WS data
+    """
+    print('Storing settings..')
+    with open('{}.p'.format(cfg.dev.settings), 'wb') as f:
+        import pickle
+        pickle.dump(settings, f)
+
+
+def generate(ws_data):
+    """
+    Generate content by pinging the WS API with WS-ready data.
+    :param ws_data: Python dictionary with WS data
+    :return: Json blob with content
+    """
+    ws = Wordsmith(cfg.wordsmith.api_key)
+    return jsonify(
+        ws.project(cfg.wordsmith.project_name, name=True)
+        .template(cfg.wordsmith.template_name, name=True)
+        .generate_narrative(ws_data).text)
+
+
 @app.route('/')
 def index():
     """

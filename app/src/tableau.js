@@ -29,25 +29,42 @@ tableauHelper.getFilters = (viz, sheets) => Promise.all(sheets
     return newOutput;
   }, {}));
 
+const parseTable = (dataTable) => {
+  const columns = dataTable.getColumns();
+  const data = dataTable.getData();
+  const newData = columns.map(() => []);
+  data.forEach((row) => {
+    row.forEach((dataValue, idx) => {
+      const col = columns[idx];
+      switch (col.getDataType()) {
+        case 'date':
+        case 'datetime':
+        case 'string':
+          newData[idx].push(dataValue.formattedValue);
+          break;
+        case 'integer':
+        case 'boolean':
+          newData[idx].push(parseInt(dataValue.value, 10));
+          break;
+        case 'float':
+          newData[idx].push(parseFloat(dataValue.value));
+          break;
+        default:
+          newData[idx].push(dataValue.formattedValue);
+      }
+    });
+  });
+  return newData;
+};
+
 tableauHelper.getMarks = (viz, sheets) => Promise.all(sheets
   .map(sheet => sheet.getSummaryDataAsync()))
-  .then(dataSheets => dataSheets.reduce((output, dataTable, indx) => {
+  .then(marks => marks.reduce((output, dataTable, indx) => {
     const sheetName = sheets[indx].getName();
     const newOutput = output;
     newOutput[sheetName] = {};
-    const columnNames = dataTable.getColumns().map(col => col.getFieldName());
-    const data = dataTable.getData();
-    columnNames.forEach((col) => {
-      if (!Object.keys(newOutput).includes(col)) {
-        newOutput[sheetName][col] = [];
-      }
-    });
-    data.forEach((row) => {
-      row.forEach((val, index) => {
-        const key = columnNames[index];
-        newOutput[sheetName][key].push(val.formattedValue);
-      });
-    });
+    newOutput[sheetName].names = dataTable.getColumns().map(col => col.getFieldName());
+    newOutput[sheetName].data = parseTable(dataTable);
     return newOutput;
   }, {}));
 
