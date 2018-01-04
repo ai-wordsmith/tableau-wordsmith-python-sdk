@@ -7,3 +7,9 @@
 
 # Node Files
 node_modules/
+
+# Python files
+__pycache__
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
