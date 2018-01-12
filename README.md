@@ -49,6 +49,8 @@ Then execute the following commands:
 
 ### config.yml File
 
+In order to propagate changes made to `config.yml` file, run `npm run build` from root.
+
 #### `tableau`
   - **server**: Server url hosting dashboard. Include trailing slash.
   - **project**: Project name from URL. See image below for more detail.
@@ -78,8 +80,8 @@ A `ws_data.csv` file, with all of the calcs ready for upload to a
 Wordsmith project, is also generated.
 
 ### Styling
-Browse `templates/` for various HTML formattings. `index.html` and `table.html` are the current offerings, but
-others can be added and selected in `config.yml`. The user can also edit `static/css/main.css` to change the
+The HTML files live in `templates/`; other files can be added and selected in `config.yml`.
+The user can also edit `static/css/main.css` to change the
 stylings on the web page.
 
 ### Calculations

@@ -12,5 +12,5 @@ wordsmith:
   template_slug: 'template'
 html:
   title: "SuperStore Sample"
-  file: "table.html"
+  file: "index.html"
 dev: False

@@ -39,8 +39,8 @@ def generate(ws_data):
           'of the designated Wordsmith Project.'
     try:
         return jsonify(
-            ws.project(cfg.wordsmith.project_slug, name=True)
-            .template(cfg.wordsmith.template_slug, name=True)
+            ws.project(cfg.wordsmith.project_slug)
+            .template(cfg.wordsmith.template_slug)
             .generate_narrative(ws_data).text)
     except NarrativeGenerateError:
         return jsonify(msg)
