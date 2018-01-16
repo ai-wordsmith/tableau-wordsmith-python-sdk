@@ -116,7 +116,7 @@ $(() => {
       addListeners(viz, cfg);
     },
   };
-  const containerDiv = document.getElementById(cfg.tableau.htmlElement);
+  const containerDiv = document.getElementById('tableauViz');
   const url = `${cfg.tableau.server}/views/${cfg.tableau.project}/${cfg.tableau.view}`;
   viz = new tableau.Viz(containerDiv, url, options);
 });
@@ -126,7 +126,7 @@ $(() => {
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = {"tableau":{"server":"https://public.tableau.com/","project":"Superstore_1057","view":"Overview","changes":{"filters":false,"marks":false,"parameters":false}},"wordsmith":{"api_key":"*","project_slug":"project","template_slug":"template"},"html":{"title":"SuperStore Sample","file":"table.html"},"dev":false}
+module.exports = {"tableau":{"server":"https://public.tableau.com/","project":"Superstore_1057","view":"Overview","changes":{"filters":true,"marks":true,"parameters":true}},"wordsmith":{"api_key":"*","project_slug":"project","template_slug":"template"},"html":{"title":"SuperStore Sample","file":"index.html"},"dev":false}
 
 /***/ }),
 /* 2 */

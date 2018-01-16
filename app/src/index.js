@@ -47,7 +47,7 @@ $(() => {
       addListeners(viz, cfg);
     },
   };
-  const containerDiv = document.getElementById(cfg.tableau.htmlElement);
+  const containerDiv = document.getElementById('tableauViz');
   const url = `${cfg.tableau.server}/views/${cfg.tableau.project}/${cfg.tableau.view}`;
   viz = new tableau.Viz(containerDiv, url, options);
 });
